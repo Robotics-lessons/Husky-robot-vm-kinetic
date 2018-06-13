@@ -1,0 +1,70 @@
+Install husky package on VMWare
+==================================
+1. mkdir git-source
+2. cd  git-source
+3. git clone https://github.com/husky/husky.git
+4. git clone https://github.com/ros-teleop/teleop_twist_keyboard.git
+5. ln -s ~/git-source/teleop_twist_keyboard ~/catkin_ws/src
+6. ln -s ~/git-source/husky ~/catkin_ws/src
+7. cd ~/catkin_ws
+8. catkin_make
+
+Fixed problem
+=============
+Error [parser.cc:581] Unable to find uri[model://ground_plane]
+Error [parser.cc:581] Unable to find uri[model://sun]
+Error [parser.cc:581] Unable to find uri[model://willowgarage]
+Fixed:
+created ~/.gazebo/models
+Copied Gazebo model package from https://bitbucket.org/osrf/gazebo_models
+export GAZEBO_MODEL_PATH=~/.gazebo/models
+Add it in .bashrc file
+
+Fixed error: Physics dynamic reconfigure ready.
+VMware: vmw_ioctl_command error Invalid argument.
+export SVGA_VGPU10=0
+
+Fixed the error: Could not find the required component 'controller_manager'
+sudo apt-get install ros-kinetic-controller-manager
+
+Fixed error: Invalid <param> tag: Cannot load command parameter [robot_description]: command [/opt/ros/kinetic/lib/xacro/xacro '/home/yangnie/catkin_ws/src/husky/husky_description/urdf/husky.urdf.xacro'     --inorder     robot_namespace:=/     laser_enabled:=true     kinect_enabled:=false     urdf_extras:=     ] returned with code [2].
+
+git clone https://github.com/clearpathrobotics/LMS1xx.git
+ln -s ~/git-source/LMS1xx ~/catkin_ws/src
+
+Fixed Controller Spawner couldn't find the expected controller_manager ROS interface.
+Seperate spawn from world in launch file:
+roslaunch husky_gazebo empty_world.launch world_name:=worlds/robocup14_spl_field.world
+or roslaunch husky_gazebo spawn_husky.launch kinect_enabled:=true laser_enabled:=true
+then run: roslaunch husky_gazebo spawn_husky.launch
+
+**** Use this command to check depanded package to install:
+rosdep check --from-paths src --ignore-src
+Then use sudo apt install [package name]
+
+Fixed error: cannot launch node of type [robot_localization/ekf_localization_node]: robot_localization
+git clone  https://github.com/cra-ros-pkg/robot_localization.git
+ln -s ~/git-source/robot_localization ~/catkin_ws/src
+Same problem for other missed node, git clone, ln to src, then catkin_make to fix them
+Like:
+interactive_marker_twist_server
+pointcloud_to_laserscan
+robot_localization
+twist_mux
+
+
+Fixed error: Could not find a package configuration file provided by "geographic_msgs"
+sudo apt-get install ros-kinetic-geographic-msgs
+
+Test
+================
+roslaunch gazebo_ros willowgarage_world.launch
+roslaunch gazebo_ros mud_world.launch
+roslaunch gazebo_ros shapes_world.launch
+roslaunch gazebo_ros rubble_world.launch
+
+
+roslaunch husky_gazebo empty_world.launch world_name:=worlds/robocup14_spl_field.world
+
+
+

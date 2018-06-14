@@ -68,6 +68,14 @@ sudo apt install ros-kinetic-joint-state-controller
 4. Could not load controller 'husky_velocity_controller' because controller type 'diff_drive_controller/DiffDriveController' does not exist.
 sudo apt install ros-kinetic-diff-drive-controller
 
+install eclipse
+===============
+1. install eclipse from Ubuntu Software
+2. Install Java 8 runtime, sudo add-apt-repository ppa:webupd8team/java
+3. sudo apt update; sudo apt install oracle-java8-installer
+4. javac -version
+5. udo apt install oracle-java8-set-default
+
 Test Gazebo
 ===========
 1. roslaunch husky-robot empty_world.launch world_name:=worlds/robocup14_spl_field.world

@@ -1,0 +1,78 @@
+Set up ROS
+======================
+1. sudo sh -c 'echo "deb http://packages.ros.org/ros/ubuntu $(lsb_release -sc) main" > /etc/apt/sources.list.d/ros-latest.list'
+2. sudo apt-key adv --keyserver hkp://ha.pool.sks-keyservers.net:80 --recv-key 421C365BD9FF1F717815A3895523BAEEB01FA116
+3. sudo apt-get update
+4. sudo apt-get install ros-kinetic-desktop-full
+5. sudo rosdep init
+6. rosdep update
+7. echo "source /opt/ros/kinetic/setup.bash" >> ~/.bashrc
+8. source ~/.bashrc
+9. sudo apt-get install python-rosinstall python-rosinstall-generator python-wstool build-essential
+
+Create a catkin workspace
+=========================
+1. mkdir -p ~/husky_ws/src
+2. cd ~/husky_ws/src
+3. catkin_init_workspace
+4. cd ~/husky_ws 
+5. catkin_make
+6. 
+
+Load husky project
+==================
+1. cd ~/husky_ws/src
+2. git init
+3. git remote add origin https://github.com/Robotics-lessons/Husky-robot-vm-kinetic.git
+
+
+Set up links
+============
+1. cd ~
+2. mkdir git-sources
+3. git clone https://github.com/husky/husky.git
+4. ln -s ~/git-sources/husky     ~/husky_ws/src
+3. git clone clone https://github.com/ros-teleop/teleop_twist_keyboard.git 
+1. ln -s ~/git-sources/teleop_twist_keyboard ~/husky_ws/src
+
+Check ROS depend
+================
+1. cd ~/husky_ws
+2. rosdep check --from-paths src --ignore-src
+3. sudo apt install <missed packege>
+4. sudo apt install ros-kinetic-twist-mux
+5. sudo apt install ros-kinetic-interactive-marker-twist-server
+6. sudo apt install ros-kinetic-robot-localization
+7. sudo apt install ros-kinetic-pointcloud-to-laserscan
+8. sudo apt install ros-kinetic-controller-manager
+9. sudo apt install ros-kinetic-gazebo-ros-control
+10.sudo apt install ros-kinetic-joint-state-controller
+11.sudo apt install ros-kinetic-diff-drive-controller 
+ 
+
+Error fix
+=========
+1. Fixed error: Physics dynamic reconfigure ready.
+VMware: vmw_ioctl_command error Invalid argument.
+export SVGA_VGPU10=0, Add it in .bashrc file
+2. Error [parser.cc:581] Unable to find uri[model://ground_plane]
+Error [parser.cc:581] Unable to find uri[model://sun]
+Error [parser.cc:581] Unable to find uri[model://willowgarage]
+Fixed:
+created ~/.gazebo/models
+Copied Gazebo model package from https://bitbucket.org/osrf/gazebo_models
+export GAZEBO_MODEL_PATH=~/.gazebo/models
+Add it in .bashrc file
+3. Could not load controller 'husky_joint_publisher' because controller type 'joint_state_controller/JointStateController' does not exist.
+sudo apt install ros-kinetic-joint-state-controller
+4. Could not load controller 'husky_velocity_controller' because controller type 'diff_drive_controller/DiffDriveController' does not exist.
+sudo apt install ros-kinetic-diff-drive-controller
+
+Test Gazebo
+===========
+1. roslaunch husky-robot empty_world.launch world_name:=worlds/robocup14_spl_field.world
+2. roslaunch husky-robot spawn_husky.launch
+3. roslaunch husky-robot teleop.launch
+
+
+
